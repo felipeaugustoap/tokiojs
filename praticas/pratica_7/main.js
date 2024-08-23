@@ -1,5 +1,5 @@
 let monedero = 50
-
+let lista_dado = []
 
 
 function getRandomInt(min, max) {
@@ -19,12 +19,14 @@ while (monedero <= 100) {
         alert(`numero de monedas no valido, el saldo es de ${monedero} monedas`)
     } else if (monedero == 0) {
         alert("Game Over")
+        alert(`Los dados seleccionados fueron ${lista_dado}`)
         break
     } else if (numero == null || monedas == null) {
         break
     } else if (monedero > 0 && monedero <= 99) {
         dado = getRandomInt(1, 6)
-        //console.log(`${dado} - 2`)
+        console.log(dado)
+        lista_dado.push(dado)
         if (numero == dado) {
             alert(`Has acertado, has ganado ${monedas * 2} monedas`)
             saldo = monedero + (monedas * 2)
@@ -32,6 +34,7 @@ while (monedero <= 100) {
             alert(`Tu nuevo saldo monedero es de ${monedero} monedas`)
             if (monedero == 100) {
                 alert("¡Enhorabuena! ¡Has ganado el juego!")
+                alert(`Los dados seleccionados fueron ${lista_dado}`)
                 break
             }
         } else if (numero == null || monedas == null) {
@@ -43,11 +46,13 @@ while (monedero <= 100) {
             if (monedero == 0) {
                 alert(`Tu nuevo saldo monedero es de ${monedero} monedas.`)
                 alert("Game Over")
+                alert(`Los dados seleccionados fueron ${lista_dado}`)
                 break
             } else  {
                 alert(`Tu nuevo saldo monedero es de ${monedero} monedas.`)
                 if (monedero == 100) {
                     alert("¡Enhorabuena! ¡Has ganado el juego!")
+                    alert(`Los dados seleccionados fueron ${lista_dado}`)
                     break
                 }
                 continue
@@ -55,6 +60,7 @@ while (monedero <= 100) {
         }
     } else if (monedero == 100) {
         alert("¡Enhorabuena! ¡Has ganado el juego!")
+        alert(`Los dados seleccionados fueron ${lista_dado}`)
         break
     }
 
