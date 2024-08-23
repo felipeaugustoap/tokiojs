@@ -25,7 +25,7 @@ while (monedero <= 100) {
         break
     } else if (monedero > 0 && monedero <= 99) {
         dado = getRandomInt(1, 6)
-        console.log(dado)
+        // console.log(dado)
         lista_dado.push(dado)
         if (numero == dado) {
             alert(`Has acertado, has ganado ${monedas * 2} monedas`)
