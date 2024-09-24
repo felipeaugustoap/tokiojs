@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#background{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn{
+    width: 200px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid white;
+    color: beige;
+}
+
+.uno{
+    background-color: lightcoral;
+}
+
+.dos{
+    background-color: lightblue;
+}
+
+.tres{
+    background-color: lightgreen;
+}
+
+
+
+
+.fundo1{
+    background-color: lightcoral;
+}
+
+.fundo2{
+    background-color: lightblue;
+}
+
+.fundo3{
+    background-color: lightgreen;
+}
