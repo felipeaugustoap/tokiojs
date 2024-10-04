@@ -24,15 +24,15 @@ const calculoMedia = () => {
 
 const clasificacionMedia = () => {
     const button2 = document.getElementById("resultado2")
-    if (media >= 0 && media <= 2.99) {
+    if (media >= 0 && media < 3) {
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Muy deficiente`
-    } else if (media >= 3 && media <= 4.99) {
+    } else if (media >= 3 && media < 5) {
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Insuficiente`
-    } else if (media >= 5 && media <= 5.99) {
+    } else if (media >= 5 && media < 6) {
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Suficiente`
-    } else if (media >= 6 && media <= 6.99) {
+    } else if (media >= 6 && media < 7) {
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Bien`
-    } else if (media >= 7 && media <= 8.99) {
+    } else if (media >= 7 && media < 9) {
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Notable`
     } else if (media >= 9 && media <= 10){
         button2.innerHTML = `El aluno ha sacado una media de ${media.toFixed(2)} que corresponde a un Sobresaliente`
