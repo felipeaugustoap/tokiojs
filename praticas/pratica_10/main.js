@@ -15,7 +15,7 @@ class Persona {
         this.edad = edad
     }
 
-    
+
 }
 
 function addPersona() {
@@ -51,11 +51,6 @@ function mostrar() {
     titulo.appendChild(titulo3)
     tabla.appendChild(titulo)
 
-
-   
-
-
-
     personas.forEach(persona => {
         const fila = tabla.insertRow()
         const celda1 = fila.insertCell()
@@ -73,16 +68,11 @@ function mostrar() {
         const textoCelda3 = document.createTextNode(persona.edad)
         celda3.appendChild(textoCelda3)
         fila.appendChild(celda3)
-        //tabla.appendChild(fila)
+    
     })
-
-
-
-
 
 }
 
-console.log(personas)
 
 
 
