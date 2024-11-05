@@ -22,7 +22,7 @@ const validarFormulario = () => {
         if (campoUsuario.value.length < 4) {
             
             alert("El campo nombre es demasiado corto")
-            debugger
+
         } else if (validarEmail.test(campoEmail.value) == false) {
             
             alert("El campo email es erroneo")
