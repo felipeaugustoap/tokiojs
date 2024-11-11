@@ -16,28 +16,26 @@ const validarEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,
 const validarContrasena = /^[\.a-zA-Z0-9\-]{6,12}/
 
 const validarFormulario = () => { 
-    
-    formulario.addEventListener("submit", (evt) => {
-        evt.preventDefault()
         if (campoUsuario.value.length < 4) {
-            
             alert("El campo nombre es demasiado corto")
-
-        } else if (validarEmail.test(campoEmail.value) == false) {
-            
+        }
+    
+        if (validarEmail.test(campoEmail.value) == false && validarContrasena.test(campoContrasena.value) == false) {
             alert("El campo email es erroneo")
-        } else if (validarContrasena.test(campoContrasena.value) == false) {
-            
-            alert("El campo Contraseña no cumple los requisitos")
-        } else if(campoContrasena.value !== campoRepitaContrasena.value){
-            
-            alert("El campo Repita Contraseña no coincide")
-        } else {
-            formulario.submit()
             
         }
+        if (validarContrasena.test(campoContrasena.value) == false) {
+            
+            alert("El campo Contraseña no cumple los requisitos")
+        }
+        if (campoContrasena.value !== campoRepitaContrasena.value) {
         
-    }) 
+        alert("El campo Repita Contraseña no coincide")
+        }
+        if (campoUsuario.value.length > 4 && validarEmail.test(campoEmail.value) && validarContrasena.test(campoContrasena.value) && campoContrasena.value === campoRepitaContrasena.value) {
+        formulario.submit()
+        }
+    
 }
 
 
@@ -46,8 +44,15 @@ const validarFormulario = () => {
 
 
 window.addEventListener("load", () => {
+    
 
-    validarFormulario()
+    formulario.addEventListener("submit", (evt) => {
+        evt.preventDefault()
+        validarFormulario()
+        
+    }) 
+
+
     
     campoUsuario.addEventListener("focus", () => {
     
