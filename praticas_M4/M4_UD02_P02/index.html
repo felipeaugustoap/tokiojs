@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M4_UD02_P02</title>
+    <style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        div{
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, button{
+            margin: 5px;
+        }
+        input{
+            width: 300px;
+        }
+        button{
+            width: 200px;
+        }
+
+        h2{
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", ()=>{
+            const inputNombre = document.getElementById("nombre")
+            const btnAnadirLS = document.getElementById("btnAnadirLS")
+            const btnFecha = document.getElementById("fecha")
+            const btnMostrarDatos = document.getElementById("mostrarDatos")
+            const divDatos = document.getElementById("datos")
+            
+            btnAnadirLS.addEventListener("click", ()=>{
+                if(inputNombre.value.length < 3){
+                    alert("Porfavor, insira un nombre")
+                } else {
+                    const nombre = inputNombre.value
+                    const nombreToString = String(nombre)
+                    const valorAlmacenado = localStorage.getItem("M4_UD02_P02")
+                    //console.log(valorAlmacenado)
+
+                    if(nombreToString === valorAlmacenado ){
+                        console.error("valor erroneo")
+                        alert(`${nombreToString} ya consta en el Almacienamento local`)
+                    } else{
+                        localStorage.setItem("M4_UD02_P02", nombreToString)
+                        alert(`El nombre: ${localStorage["M4_UD02_P02"]}, fue inserido en el Almacienamento local`)
+                    }
+
+                }
+            })
+
+            btnFecha.addEventListener("click", ()=>{
+                if(sessionStorage !== undefined){
+                    console.log("Almacienamento de sesión disponible")
+                } else {
+                    console.log("Almacienamento de sesión no disponible para este navegador")
+                }
+
+                const fecha = new Date().getTime()
+                const fechaToString = String(fecha)
+                const valorAlmacenado = sessionStorage.getItem("fecha")
+
+                if(fechaToString === valorAlmacenado ){
+                        console.error("valor erroneo")
+                        alert(`${fechaToString} ya consta en el Almacienamento de sesión`)
+                    } else{
+                        sessionStorage.setItem("fecha", fechaToString)
+                        alert(`la fecha: ${sessionStorage["fecha"]}, fue inserido en el Almacienamento de sesión`)
+                    }
+            })
+            
+            btnMostrarDatos.addEventListener("click", ()=>{
+                divDatos.innerHTML = ""
+                const ptituloLS = document.createElement("h2")
+                const tituloLS = document.createTextNode("Datos del Almacienamento Local: ")
+                ptituloLS.appendChild(tituloLS)
+                divDatos.appendChild(ptituloLS)
+
+                const pClaveAlumno = document.createElement("p")
+
+                if(localStorage.getItem("M4_UD02_P02") == null){
+                    const textoClaveAlumno = document.createTextNode(`M4_UD02_P02: no hay datos almacenados`)
+                    pClaveAlumno.appendChild(textoClaveAlumno)
+                    divDatos.appendChild(pClaveAlumno)
+                } else{
+                    const textoClaveAlumno = document.createTextNode(`M4_UD02_P02: ${localStorage.getItem("M4_UD02_P02")}`)
+                    pClaveAlumno.appendChild(textoClaveAlumno)
+                    divDatos.appendChild(pClaveAlumno)
+                }
+
+                const pTituloSS = document.createElement("h2")
+                const tituloSS = document.createTextNode("Datos del Almacienamento de la sesión: ")
+                pTituloSS.appendChild(tituloSS)
+                divDatos.appendChild(pTituloSS)
+
+                const pClaveFecha = document.createElement("p")
+
+                if(sessionStorage.getItem("fecha") == null){ 
+                    const claveFecha = document.createTextNode(`Fecha: no hay datos almacenados`)
+                    pClaveFecha.appendChild(claveFecha)
+                    divDatos.appendChild(pClaveFecha)
+                } else{
+                    const claveFecha = document.createTextNode(`Fecha: ${sessionStorage.getItem("fecha")}`)
+                    pClaveFecha.appendChild(claveFecha)
+                    divDatos.appendChild(pClaveFecha)
+                }
+
+                
+                
+            })
+        
+        
+        })
+    </script>  
+</head>
+<body>
+    <div>
+        <input type="text" placeholder="Nombre del Aluno" id="nombre">
+        <button type="button" id="btnAnadirLS">Añadir Local Storage</button>
+        <button type="button" id="fecha">Añadir Fecha en Almacienamento</button>
+        <button type="button" id="mostrarDatos">Mostrar Datos</button>
+        <div id="datos">
+            
+        </div>
+    </div>
+
+</body>
+</html>
