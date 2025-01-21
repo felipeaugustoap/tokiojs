@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
     <script>
         window.addEventListener("load", ()=>{
             const solicitarFotos = () =>{
@@ -26,28 +43,26 @@
                 for (let i=0; i< 20;i++){
                     const tabla = document.getElementById("tabla")
                     const row = document.createElement("tr")
-                    const celda1 = document.createElement("td")
-                    const celda2 = document.createElement("td")
-                    const celda3 = document.createElement("td")
-                    const celda4 = document.createElement("td")
-                    const celda5 = document.createElement("td")
-                    celda1.innerText = JSON.stringify(listado[i].albumId)
-                    row.appendChild(celda1)
-                    // celda2.innerText = JSON.stringify(listado[i].id)
-                    // row.appendChild(celda2)
-                    celda3.innerText = JSON.stringify(listado[i].title)
-                    row.appendChild(celda3)
-                    celda4.innerText = JSON.stringify(listado[i].url.replace('"',''))
-                    row.appendChild(celda4)
-                    celda5.innerText = JSON.stringify(listado[i].thumbnailUrl)
-                    row.appendChild(celda5)
-                    tabla.appendChild(row)
-                    console.log(listado[i].url)
-
+                    const celdaAlbum = document.createElement("td")
+                    const celdaTitle = document.createElement("td")
+                    const celdaUrl = document.createElement("td")
+                    const celdaThumnailUrl = document.createElement("td")
+                    celdaAlbum.innerText = JSON.stringify(listado[i].albumId)
+                    row.appendChild(celdaAlbum)
+                    celdaTitle.innerText = JSON.stringify(listado[i].title)
+                    row.appendChild(celdaTitle)
+                    celdaUrl.innerText = JSON.stringify(listado[i].url)
+                    row.appendChild(celdaUrl)
+                    const imgThumnailUrl = document.createElement("img")
+                    imgThumnailUrl.setAttribute("src", listado[i].thumbnailUrl)
+                    celdaThumnailUrl.appendChild(imgThumnailUrl)
+                    row.appendChild(celdaThumnailUrl)
+                    tabla.appendChild(row) 
                 }
                 
 
             }).catch(error => alert(JSON.stringify(error)))
+
         })
     </script>
 </head>
@@ -55,7 +70,6 @@
     <table id="tabla">
         <tr>
             <th>AlbumId</th>
-            <!-- <th>Id</th> -->
             <th>Title</th>
             <th>Url</th>
             <th>ThumbnailUrl</th>

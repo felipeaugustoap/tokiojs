@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener("load", ()=>{
+            const solicitarFotos = () =>{
+                return fetch("https://jsonplaceholder.typicode.com/photos")
+                .then(response => {
+                    if(response.status !== 200) {
+                        throw new Error(`Respuesta no esperada ${response.status}`)
+                    }
+        
+                    return response.json()
+                })
+            }
+            
+            solicitarFotos()
+            .then(listaFotos => mostrarListado(listaFotos))
+            .catch(error => alert(JSON.stringify(error)))
+
+            const mostrarListado = (listaFotos)=>{
+                
+                
+                const listado = []
+                listaFotos.forEach(foto => {
+                    listado.push(foto)
+                });
+                console.log(listado)
+                
+                for (let i=0; i< 20;i++){
+                    const tabla = document.getElementById("tabla")
+                    const row = document.createElement("tr")
+                    const celda1 = document.createElement("td")
+                    const celda2 = document.createElement("td")
+                    const celda3 = document.createElement("td")
+                    const celda4 = document.createElement("td")
+                    const celda5 = document.createElement("td")
+                    const celda6 = document.createElement("td")
+                    const btnDelete = document.createElement("button")
+                    btnDelete.setAttribute("type", "button")
+                    const textoBtn = document.createTextNode("Eliminar Registro")
+                    btnDelete.appendChild(textoBtn)
+                    celda1.innerText = JSON.stringify(listado[i].albumId)
+                    row.appendChild(celda1)
+                    // celda2.innerText = JSON.stringify(listado[i].id)
+                    // row.appendChild(celda2)
+                    celda3.innerText = JSON.stringify(listado[i].title)
+                    row.appendChild(celda3)
+                    celda4.innerText = JSON.stringify(listado[i].url.replace('"',''))
+                    row.appendChild(celda4)
+                    celda5.innerText = JSON.stringify(listado[i].thumbnailUrl)
+                    row.appendChild(celda5)
+                    celda6.appendChild(btnDelete)
+                    row.appendChild(celda6)
+                    tabla.appendChild(row)
+
+                    btnDelete.addEventListener("click", ()=>{
+                        fetch(`https://jsonplaceholder.typicode.com/photos/${listado[i]}`, {
+                            method: "DELETE"
+                        })
+                        console.log(listado[i][i])
+                        console.log(listado)
+                    })
+                    
+
+                }
+                
+
+      
+            }
+        })
+    </script>
+</head>
+<body>
+    <table id="tabla">
+        <tr>
+            <th>AlbumId</th>
+            <!-- <th>Id</th> -->
+            <th>Title</th>
+            <th>Url</th>
+            <th>ThumbnailUrl</th>
+            <th>Eliminar Registro</th>
+            
+        </tr>
+    </table>
+    
+</body>
+</html>
