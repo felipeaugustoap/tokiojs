@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
     <script>
         window.addEventListener("load", ()=>{
             const solicitarFotos = () =>{
-                return fetch("https://jsonplaceholder.typicode.com/photos")
+                return fetch("https://jsonplaceholder.typicode.com/photos?_limit=20")
                 .then(response => {
                     if(response.status !== 200) {
                         throw new Error(`Respuesta no esperada ${response.status}`)
@@ -18,74 +35,110 @@
             }
             
             solicitarFotos()
-            .then(listaFotos => mostrarListado(listaFotos))
-            .catch(error => alert(JSON.stringify(error)))
-
-            const mostrarListado = (listaFotos)=>{
-                
-                
-                const listado = []
-                listaFotos.forEach(foto => {
-                    listado.push(foto)
-                });
-                console.log(listado)
-                
-                for (let i=0; i< 20;i++){
+                .then(arrayFotos => {
                     const tabla = document.getElementById("tabla")
-                    const row = document.createElement("tr")
-                    const celda1 = document.createElement("td")
-                    const celda2 = document.createElement("td")
-                    const celda3 = document.createElement("td")
-                    const celda4 = document.createElement("td")
-                    const celda5 = document.createElement("td")
-                    const celda6 = document.createElement("td")
-                    const btnDelete = document.createElement("button")
-                    btnDelete.setAttribute("type", "button")
-                    const textoBtn = document.createTextNode("Eliminar Registro")
-                    btnDelete.appendChild(textoBtn)
-                    celda1.innerText = JSON.stringify(listado[i].albumId)
-                    row.appendChild(celda1)
-                    // celda2.innerText = JSON.stringify(listado[i].id)
-                    // row.appendChild(celda2)
-                    celda3.innerText = JSON.stringify(listado[i].title)
-                    row.appendChild(celda3)
-                    celda4.innerText = JSON.stringify(listado[i].url.replace('"',''))
-                    row.appendChild(celda4)
-                    celda5.innerText = JSON.stringify(listado[i].thumbnailUrl)
-                    row.appendChild(celda5)
-                    celda6.appendChild(btnDelete)
-                    row.appendChild(celda6)
-                    tabla.appendChild(row)
 
-                    btnDelete.addEventListener("click", ()=>{
-                        fetch(`https://jsonplaceholder.typicode.com/photos/${listado[i]}`, {
-                            method: "DELETE"
-                        })
-                        console.log(listado[i][i])
-                        console.log(listado)
-                    })
-                    
+                    arrayFotos.forEach(foto => {
+                        const row = document.createElement("tr")
+                        const celdaAlbum = document.createElement("td")
+                        const celdaTitle = document.createElement("td")
+                        //const celdaUrl = document.createElement("td")
+                        const celdaThumnailUrl = document.createElement("td")
+                        const imgThumnailUrl = document.createElement("img")
+                        const celdaEliminar = document.createElement("td")
 
+                        const btnDelete = document.createElement("button")
+                        const textoBtn = document.createTextNode("Eliminar Registro")
+                        btnDelete.appendChild(textoBtn)
+                        btnDelete.setAttribute("onclick", `deletar(${foto.id}, this)`)
+
+
+                        celdaAlbum.innerText = JSON.stringify(foto.albumId)
+                        row.appendChild(celdaAlbum)
+
+                        celdaTitle.innerText = JSON.stringify(foto.title)
+                        row.appendChild(celdaTitle)
+                        
+                        imgThumnailUrl.setAttribute("src", foto.thumbnailUrl)
+                        celdaThumnailUrl.appendChild(imgThumnailUrl)
+                        row.appendChild(celdaThumnailUrl)
+
+
+                        celdaEliminar.appendChild(btnDelete)
+                        row.appendChild(celdaEliminar)
+                        
+                        tabla.appendChild(row)
+
+                        console.log('ID del registro:', foto.id);
+                    });
+
+                })
+                .catch(error => alert(JSON.stringify(error)))
+            
+            const container = document.getElementById("container")
+            const btnAddDato = document.createElement("button")
+            const textoAddDato = document.createTextNode("Adicionar Registro")
+            btnAddDato.appendChild(textoAddDato)
+            btnAddDato.setAttribute("type", "button")
+            container.appendChild(btnAddDato)
+
+            btnAddDato.addEventListener("click", ()=>{
+                const addRegistro ={
+                    albumId: 1,
+                    thumbnailUrl: null,
+                    title: "Felipe Augusto de Almeida Pereira",
+                    url: "https://cursos.com/wp-content/uploads/2021/04/academia-tokio-school.jpg"
                 }
-                
 
-      
-            }
+                fetch(`https://jsonplaceholder.typicode.com/photos`, {
+                    method: "POST",
+                    body: JSON.stringify(addRegistro),
+                    headers: {
+                        "Content-Type" : "application/json"
+                    }
+                })
+                .then(response =>{
+                    if(response.status !== 201) {
+                        throw new Error(`Respuesta no esperada ${response.status}`)
+                    }
+                    return response.json()
+                })
+                .then(data=>console.log('Nueva entrada creada:', data))
+                .catch(error=>alert(JSON.stringify(error)))
+                
+            })
+
         })
+        const deletar =(id, button) =>{
+                fetch(`https://jsonplaceholder.typicode.com/photos/${id}`, {
+                    method:"DELETE"
+                })
+                .then(response => {
+                    if(response.ok){
+                        button.closest('tr').remove()
+                        console.log(`Registro con ID: ${id} eliminado correctamente`)
+                    } else {
+                        console.error('Error al eliminar el registro');
+                    }
+        
+                })
+                .catch(error => alert(JSON.stringify(error)));
+    
+        }
+        
     </script>
 </head>
 <body>
-    <table id="tabla">
-        <tr>
-            <th>AlbumId</th>
-            <!-- <th>Id</th> -->
-            <th>Title</th>
-            <th>Url</th>
-            <th>ThumbnailUrl</th>
-            <th>Eliminar Registro</th>
-            
-        </tr>
-    </table>
+    <div id="container">
+        <table id="tabla">
+            <tr>
+                <th>AlbumId</th>
+                <th>Title</th>
+                <th>ThumbnailUrl</th>
+                <th>Eliminar Registro</th>
+            </tr>
+        </table>
+    </div>
     
 </body>
 </html>
